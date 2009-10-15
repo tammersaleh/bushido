@@ -16,6 +16,15 @@ def copy_asset_file(filename)
   file filename, read_asset_file(filename)
 end
 
+hoptoad_key = ask("What's your hoptoad key?  GIVE IT TO ME!")
+if hoptoad_key.present?
+  initializer 'hoptoad.rb', 
+%Q{HoptoadNotifier.configure do |config|
+  config.api_key = '#{hoptoad_key}'
+end
+}
+end
+
 # Delete unnecessary files
 run "rm README"
 run "rm public/index.html"
@@ -52,7 +61,6 @@ gem 'webrat',   :env => "test"
 gem 'fakeweb',  :env => "test"               
 gem 'thoughtbot-factory_girl',   :lib => "factory_girl",   :source => "http://gems.github.com", :env => "test"
 gem 'thoughtbot-shoulda',        :lib => "shoulda",        :source => "http://gems.github.com", :env => "test"
-gem 'thoughtbot-quietbacktrace', :lib => "quietbacktrace", :source => "http://gems.github.com", :env => "test"
 
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'

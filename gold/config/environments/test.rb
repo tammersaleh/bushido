@@ -32,7 +32,6 @@ config.gem 'webrat'
 config.gem 'fakeweb'
 config.gem 'thoughtbot-factory_girl', :lib => 'factory_girl', :source => 'http://gems.github.com'
 config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
-config.gem 'thoughtbot-quietbacktrace', :lib => 'quietbacktrace', :source => 'http://gems.github.com'
 HOST = 'localhost'
 require 'factory_girl'
 begin require 'redgreen'; rescue LoadError; end
