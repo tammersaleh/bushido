@@ -1,3 +1,5 @@
+require 'open-uri'
+
 @app_name       = File.basename(@root)
 @template_root  = File.dirname(template)
 @jquery_version = "1.3.2"
