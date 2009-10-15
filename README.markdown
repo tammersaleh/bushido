@@ -1,0 +1,1 @@
+@rails app-name -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb@
