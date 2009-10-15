@@ -9,7 +9,7 @@ require 'open-uri'
 raise "The template path must be absolute." unless @template_root =~ /^(\/|http:\/\/)/
 
 def read_asset_file(filename)
-  File.open([@template_root, 'assets', filename].join('/')).read
+  open([@template_root, 'assets', filename].join('/')).read
 end
 
 def copy_asset_file(filename)
