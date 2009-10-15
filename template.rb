@@ -4,7 +4,7 @@
 @human_app_name = @app_name.gsub(/[-_]/, ' ').humanize
 @title_app_name = @app_name.gsub(/[-_]/, ' ').titlecase
 
-raise "The template path must be absolute." unless @template_root =~ /^\//
+raise "The template path must be absolute." unless @template_root =~ /^(\/|http:\/\/)/
 
 def read_asset_file(filename)
   File.open([@template_root, 'assets', filename].join('/')).read
