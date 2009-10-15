@@ -1,0 +1,16 @@
+
+development:
+  adapter: mysql
+  database: test-app_development
+  username: root
+  password: 
+  host: localhost
+  encoding: utf8
+  
+test:
+  adapter: mysql
+  database: test-app_test
+  username: root
+  password: 
+  host: localhost
+  encoding: utf8
