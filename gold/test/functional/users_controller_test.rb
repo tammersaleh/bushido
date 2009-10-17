@@ -11,18 +11,6 @@ class UsersControllerTest < ActionController::TestCase
         assert_select "form[action$=?][method=post][enctype='multipart/form-data']", users_path
       end
 
-      should "render company name field" do
-        assert_select "form" do
-          assert_select "input[name=?]", "user[company_name]"
-        end
-      end
-
-      should "render job title field" do
-        assert_select "form" do
-          assert_select "input[name=?]", "user[job_title]"
-        end
-      end
-
       should "render photo upload field" do
         assert_select "form" do
           assert_select "input[type=file][name=?]",   "user[photo]"
@@ -35,9 +23,6 @@ class UsersControllerTest < ActionController::TestCase
         post :create, 
              :user => { :name                  => "Joe", 
                         :email                 => "none@nowhere.com",
-                        :company_name          => "New Company",
-                        :job_title             => "Executive",
-                        :user_type             => User::Journalist,
                         :password              => "letmein",
                         :password_confirmation => "letmein" }
       end
@@ -45,17 +30,6 @@ class UsersControllerTest < ActionController::TestCase
       should_redirect_to("homepage") { root_url }
       should_set_the_flash_to /welcome/i
       should_not_have_errors_on :user
-      should "set the user type" do
-        assert assigns(:user).journalist?
-      end
-    end
-
-    context "on POST to /users/create, forcing admin" do
-      setup { post :create, :user => { :user_type => User::Administrator } }
-
-      should "not set the user type" do
-        assert_match(/blank/i, assigns(:user).errors.on(:user_type))
-      end
     end
 
     context "on POST to /users/create with bad info" do
@@ -67,26 +41,14 @@ class UsersControllerTest < ActionController::TestCase
     end
   end
 
-  as_a_journalist do
+  as_a_logged_in_user do
     context "on GET to /users/:id/edit" do
       setup { get :edit, :id => @logged_in_user.to_param }
       should_render_template :edit
 
       should "render a multipart edit user form" do
-        assert_select "form[action$=?][method=post][enctype='multipart/form-data']", 
-                      user_path(@logged_in_user)
-        assert_select "input[type=hidden][name=_method][value=put]"
-      end
-
-      should "render company name field" do
-        assert_select "form" do
-          assert_select "input[name=?]", "user[company_name]"
-        end
-      end
-
-      should "render job title field" do
-        assert_select "form" do
-          assert_select "input[name=?]", "user[job_title]"
+        assert_select "form[action$=?][method=post][enctype='multipart/form-data']", user_path(@logged_in_user) do
+          assert_select "input[type=hidden][name=_method][value=put]"
         end
       end
 
@@ -104,40 +66,13 @@ class UsersControllerTest < ActionController::TestCase
       should_not_have_errors_on :user
     end
 
-    context "on PUT to /users/:id, changing user type" do
-      setup do
-        put :update, :id => @logged_in_user.to_param, :user => {:user_type => User::CompanyRepresentative}
-      end
-      should_set_the_flash_to /updated/i
-      should_not_have_errors_on :user
-      should "change the user type" do
-        assert assigns(:user).company_representative?
-      end
-    end
-
-    context "on PUT to /users/:id, changing user type to administrator" do
-      setup do
-        put :update, :id => @logged_in_user.to_param, :user => {:user_type => User::Administrator}
-      end
-      should_set_the_flash_to /updated/i
-      should_not_have_errors_on :user
-      should "not change the user type" do
-        assert !assigns(:user).administrator?
-      end
-    end
-
     context "on GET to /users/:id" do
       setup do
-        @logged_in_user.update_attributes(:twitter_url => "http://twitter.com/foo")
         get :show, :id => @logged_in_user.to_param
       end
       should_render_template :show
       should "render edit link" do
         assert_select "a[href$=?]", edit_user_path(assigns(:user))
-      end
-
-      should "display the user's social links as external" do
-        assert_have_selector ".social_links a.external"
       end
     end
 

@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
 
+  before_filter :require_user
+
 private
  
   def current_user_session
@@ -31,7 +33,7 @@ private
   def require_no_user
     if current_user
       deny_access :redirect_to => root_url,
-                  :flash       => "You must be logged out to access this page."
+                  :flash       => "#{current_user}, you must be logged out to access this page."
     end
   end
 

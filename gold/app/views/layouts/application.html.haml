@@ -20,7 +20,6 @@
             = link_to current_user, current_user
           .logout
             = link_to "Logout", user_session_url, :method => :delete
-        - end
     #content
       = render :partial => 'layouts/flashes'
       = yield

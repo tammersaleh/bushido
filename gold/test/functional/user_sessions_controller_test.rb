@@ -38,7 +38,7 @@ class UserSessionsControllerTest < ActionController::TestCase
     should_be_denied_on "delete :destroy"
   end
 
-  as_a_journalist do
+  as_a_logged_in_user do
     should_be_denied_on "get :new"
     should_be_denied_on "post :create, :user_session => {}"
 
