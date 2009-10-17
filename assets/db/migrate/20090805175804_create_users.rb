@@ -7,6 +7,10 @@ class CreateUsers < ActiveRecord::Migration
       t.string  :password_salt
       t.string  :persistence_token 
       t.boolean :active, :default => true, :null => false
+      t.string  :photo_file_name
+      t.string  :photo_content_type
+      t.integer :photo_file_size
+      
       t.timestamps
     end
 

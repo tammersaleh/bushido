@@ -33,7 +33,7 @@ private
   def require_no_user
     if current_user
       deny_access :redirect_to => root_url,
-                  :flash       => "#{current_user}, you must be logged out to access this page."
+                  :flash       => "You must be logged out to access this page."
     end
   end
 

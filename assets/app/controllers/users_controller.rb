@@ -4,6 +4,12 @@ class UsersController < InheritedResources::Base
 
   actions :new, :create, :show, :edit, :update
 
+  def create
+    create! do |success, failure|
+      success.html { redirect_to root_url }
+    end
+  end
+  
   private
 
   def require_self
@@ -12,4 +18,3 @@ class UsersController < InheritedResources::Base
     end
   end
 end
-

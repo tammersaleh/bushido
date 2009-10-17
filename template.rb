@@ -64,6 +64,7 @@ gem 'thoughtbot-shoulda',        :lib => "shoulda",        :source => "http://ge
 
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'
+run "haml --rails ."
 
 file '.gitignore', read_asset_file('gitignore')
 
@@ -81,18 +82,19 @@ ActionController::Base.session = {
 END
 
 copy_asset_file 'db/migrate/20090805175804_create_users.rb'
-copy_asset_file 'app/views/layouts/_flashes.html.erb'
 copy_asset_file 'app/controllers/user_sessions_controller.rb'
 copy_asset_file 'app/controllers/users_controller.rb'
 copy_asset_file 'app/models/user.rb'
 copy_asset_file 'app/models/user_session.rb'
-copy_asset_file 'app/views/users/_form.html.erb'
-copy_asset_file 'app/views/users/_user.html.erb'
-copy_asset_file 'app/views/users/edit.html.erb'
-copy_asset_file 'app/views/users/new.html.erb'
-copy_asset_file 'app/views/users/show.html.erb'
-copy_asset_file 'app/views/user_sessions/new.html.erb'
+copy_asset_file 'app/views/layouts/_flashes.html.haml'
+copy_asset_file 'app/views/users/_form.html.haml'
+copy_asset_file 'app/views/users/_user.html.haml'
+copy_asset_file 'app/views/users/edit.html.haml'
+copy_asset_file 'app/views/users/new.html.haml'
+copy_asset_file 'app/views/users/show.html.haml'
+copy_asset_file 'app/views/user_sessions/new.html.haml'
 copy_asset_file 'config/routes.rb'
+copy_asset_file 'config/locales/en.yml'
 copy_asset_file 'config/initializers/requires.rb'
 copy_asset_file 'config/initializers/time_formats.rb'
 copy_asset_file 'config/initializers/errors.rb'
@@ -143,43 +145,36 @@ gsub_file 'app/helpers/application_helper.rb', /(^end\b)/mi do |match|
   read_asset_file('app/helpers/application_helper.rb.fragment') + match
 end
 
-file 'app/views/layouts/application.html.erb', 
-%Q{<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <meta content='text/html; charset=utf-8' http-equiv='Content-type' />
-    <title>#{@title_app_name}</title>
-    <%= stylesheet_link_tag "blueprint/screen", :media => "screen, projection" %>
-    <%= stylesheet_link_tag "blueprint/print", :media => "print" %>
-    <%= stylesheet_link_tag "formtastic" %>
-    <%= stylesheet_link_tag "formtastic_changes" %>
-    <%= stylesheet_link_tag 'screen', :media => 'all', :cache => true %>
-  </head>
-  <body class="<%= body_class %>" >
-    <div id='header'>
-      <h1>#{@title_app_name}</h1>
-      <div id='session_links'>
-        <% if current_user %>
-        <div class='welcome'>
-          Hello,
-          <%= link_to current_user, current_user %>
-        </div>
-        <div class='logout'>
-          <%= link_to "Logout", user_session_url, :method => :delete %>
-        </div>
-        <% end %>
-      </div>
-    </div>
-    <div id='content'>
-      <%= render :partial => 'layouts/flashes' %>
-      <%= yield %>
-    </div>
-    <div id='footer'>
-    </div>
-    <%= render :partial => 'layouts/javascript' %>
-  </body>
-</html>
-}
+file 'app/views/layouts/application.html.haml', 
+%Q|!!!
+%html{ "xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml" }
+  %head
+    %meta{ :content => "text/html; charset=utf-8", "http-equiv" => "Content-type" }
+    %title
+      #{@title_app_name}
+    = stylesheet_link_tag "blueprint/screen", :media => "screen, projection"
+    = stylesheet_link_tag "blueprint/print", :media => "print"
+    = stylesheet_link_tag "formtastic"
+    = stylesheet_link_tag "formtastic_changes"
+    = stylesheet_link_tag 'screen', :media => 'all', :cache => true
+  %body{ :class => body_class }
+    #header
+      %h1
+        #{@title_app_name}
+      #session_links
+        - if current_user
+          .welcome
+            Hello,
+            = link_to current_user, current_user
+          .logout
+            = link_to "Logout", user_session_url, :method => :delete
+    #content
+      = render :partial => 'layouts/flashes'
+      = yield
+    #footer
+      &copy; 2009 Tammer Saleh Consulting, Inc.
+    = render :partial => 'layouts/javascript'
+|
 
 file 'config/database.yml', 
 %Q{
@@ -200,9 +195,9 @@ test:
   encoding: utf8
 }
 
-file 'app/views/layouts/_javascript.html.erb',
-"<%= javascript_include_tag \"jquery-#{@jquery_version}\", \"application\", :cache => true %>
-<%= yield :javascript %>"
+file 'app/views/layouts/_javascript.html.haml',
+"= javascript_include_tag \"jquery-#{@jquery_version}\", \"application\", :cache => true
+= yield :javascript"
 
 rake 'gems:heroku_spec'
 

@@ -10,30 +10,10 @@ class ActionController::TestCase
     end
   end
 
-  def self.as_a_journalist(&blk)
-    context "As a logged in journalist" do
+  def self.as_a_logged_in_user(&blk)
+    context "As a logged in user" do
       setup do
-        @logged_in_user = Factory(:journalist)
-        UserSession.create(@logged_in_user)
-      end
-      merge_block(&blk)
-    end
-  end
-
-  def self.as_a_company_representative(&blk)
-    context "As a logged in company representative" do
-      setup do
-        @logged_in_user = Factory(:company_representative)
-        UserSession.create(@logged_in_user)
-      end
-      merge_block(&blk)
-    end
-  end
-
-  def self.as_an_administrator(&blk)
-    context "As a logged in administrator" do
-      setup do
-        @logged_in_user = Factory(:administrator)
+        @logged_in_user = Factory(:user)
         UserSession.create(@logged_in_user)
       end
       merge_block(&blk)

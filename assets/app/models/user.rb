@@ -22,5 +22,9 @@ class User < ActiveRecord::Base
   def to_s
     name
   end
+
+  def destroy
+    update_attributes!(:active => false)
+  end
 end
 
