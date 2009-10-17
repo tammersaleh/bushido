@@ -204,5 +204,6 @@ rake 'gems:heroku_spec'
 run 'find . -type d -empty -exec touch {}/.keep \;'
 run 'rm log/*'
 
-# git :init
-# git :add => '.'
+git :init
+git :add => '.'
+run "git commit -m 'Intial application creation using #{template}.'"
