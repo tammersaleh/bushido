@@ -1,10 +1,15 @@
 h1. Instant Rails App Template
 
-To use:
-
-  rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb
+To use: @rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb@
 
 h2. This template includes:
+
+h3. Code
+
+* Full user system with authentication (Authlogic)
+* User avatars via paperclip
+* Blueprint based default style
+* Useful Shoulda testing macros
 
 h3. Plugins & Gems:
 
@@ -22,3 +27,6 @@ h3. Plugins & Gems:
 h3. Todo:
 
 * Add http://github.com/josevalim/auth_helpers for user activation and password reset functionality
+* Add http://github.com/thoughtbot/high_voltage for semi-static pages
+* Add http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
+* Add protected assignment explosion
