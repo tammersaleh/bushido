@@ -3,6 +3,10 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   should_have_db_column :active, :type => :boolean, :default => true
 
+  should_have_db_index :email
+  should_have_db_index :active
+  should_have_db_index :perishable_token
+
   should_validate_presence_of :email
   should_validate_presence_of :password
   should_validate_presence_of :name
