@@ -26,7 +26,7 @@ h3. Plugins & Gems:
 
 h3. Todo:
 
-* Add http://github.com/josevalim/auth_helpers for user activation and password reset functionality
-* Add http://github.com/thoughtbot/high_voltage for semi-static pages
-* Add http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
+* Add "Auth Helpers":http://github.com/josevalim/auth_helpers for user activation and password reset functionality
+* Add "High Voltage":http://github.com/thoughtbot/high_voltage for semi-static pages
+* Add "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
 * Add protected assignment explosion
