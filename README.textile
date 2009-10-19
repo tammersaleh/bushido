@@ -1,0 +1,24 @@
+h1. Instant Rails App Template
+
+To use:
+
+  rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb
+
+h2. This template includes:
+
+h3. Plugins & Gems:
+
+* Inherited Resources
+* Authlogic
+* HAML
+* Formtastic (with validation reflection plugin)
+* Hoptoad
+* Blue Ridge JS testing framework
+* will_paginate
+* Paperclip
+* RedCloth
+* Blueprint CSS framework
+
+h3. Todo:
+
+* Add http://github.com/josevalim/auth_helpers for user activation and password reset functionality
