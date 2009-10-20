@@ -67,7 +67,7 @@ if(BlueRidge.loaded != true) {
   var debug   = function(message)     { return BlueRidge.CommandLine.debug(message) };
 
   // Mock up the Firebug API for convenience.
-  var console = console || {debug: debug};
+  var console = console || {debug: debug, log: debug, info: debug, warn: debug, error: debug};
 
   var BLUE_RIDGE_PREFIX = (environment["blue.ridge.prefix"] || "../../vendor/plugins/blue-ridge");
   var BLUE_RIDGE_LIB_PREFIX    = BLUE_RIDGE_PREFIX + "/lib/";

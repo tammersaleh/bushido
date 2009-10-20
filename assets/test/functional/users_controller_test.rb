@@ -7,14 +7,8 @@ class UsersControllerTest < ActionController::TestCase
       should_render_template :new
       should_not_set_the_flash
 
-      should "render a multipart new user form" do
-        assert_select "form[action$=?][method=post][enctype='multipart/form-data']", users_path
-      end
-
-      should "render photo upload field" do
-        assert_select "form" do
-          assert_select "input[type=file][name=?]",   "user[photo]"
-        end
+      should "render a new user form" do
+        assert_select "form[action$=?][method=post]", users_path
       end
     end
 

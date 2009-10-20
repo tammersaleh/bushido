@@ -1,11 +1,12 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  should_have_db_column :active, :type => :boolean, :default => true
+  should_have_db_column :active, :type => :boolean, :default => false
 
-  should_validate_presence_of :email
-  should_validate_presence_of :password
-  should_validate_presence_of :name
+  should_have_db_index :email
+  should_have_db_index :active
+  should_have_db_index :perishable_token
+
   should_have_attached_file :photo
 
   should "be authentic" do
@@ -20,7 +21,7 @@ class UserTest < ActiveSupport::TestCase
 
   should "not update password on update if password isn't set" do
     user = Factory(:user)
-    crypted_password = user.crypted_password
+    assert crypted_password = user.crypted_password
     user.password = ""
     user.password_confirmation = ""
     assert user.valid?, user.errors.full_messages
@@ -36,5 +37,56 @@ class UserTest < ActiveSupport::TestCase
     assert user.active?
     user.destroy
     assert !user.reload.active?
+  end
+
+  should "send a confirmation email when saving an inactive user" do
+    ActionMailer::Base.deliveries.clear
+    user = Factory(:inactive_user)
+    assert_sent_email { |e| e.to.first == user.email }
+  end
+
+  context "a new user" do
+    subject { @user }
+    setup { @user = User.new }
+
+    should_validate_presence_of :email
+
+    should "not validate the presence of name" do
+      @user.save
+      assert_nil @user.errors.on(:name)
+    end
+
+    should "not validate the presence of password" do
+      @user.save
+      assert_nil @user.errors.on(:password)
+    end
+  end
+
+  context "an active user" do
+    setup { @user = Factory(:user) }
+
+    should "be returned by .active" do
+      assert User.active.exists?(@user)
+    end
+  end
+
+  context "an inactive user" do
+    setup { @user = Factory(:inactive_user) }
+
+    should "not be returned by .active" do
+      assert !User.active.exists?(@user)
+    end
+
+    context "that's set to active" do
+      subject { @user }
+      setup { @user.active = true }
+
+      should_validate_presence_of :name
+
+      should "require password" do
+        @user.save
+        assert @user.errors.on(:password).present?
+      end
+    end
   end
 end

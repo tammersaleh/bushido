@@ -42,6 +42,7 @@ inside "public/javascripts" do
 end
 
 plugin 'hoptoad_notifier',      :git => "git://github.com/thoughtbot/hoptoad_notifier.git"
+plugin 'high_voltage',          :git => "git://github.com/thoughtbot/high_voltage.git"
 plugin 'limerick_rake',         :git => "git://github.com/thoughtbot/limerick_rake.git"
 plugin 'blue-ridge',            :git => "git://github.com/relevance/blue-ridge.git"
 plugin 'validation_reflection', :svn => "svn://rubyforge.org//var/svn/valirefl/validation_reflection/trunk"
@@ -81,45 +82,54 @@ ActionController::Base.session = {
 }
 END
 
-copy_asset_file 'db/migrate/20090805175804_create_users.rb'
+copy_asset_file 'app/controllers/pages_controller.rb'
+copy_asset_file 'app/controllers/user_activations_controller.rb'
 copy_asset_file 'app/controllers/user_sessions_controller.rb'
 copy_asset_file 'app/controllers/users_controller.rb'
+copy_asset_file 'app/helpers/pages_helper.rb'
+copy_asset_file 'app/models/mailer.rb'
 copy_asset_file 'app/models/user.rb'
+copy_asset_file 'app/models/user_activation.rb'
 copy_asset_file 'app/models/user_session.rb'
 copy_asset_file 'app/views/layouts/_flashes.html.haml'
+copy_asset_file 'app/views/mailer/reset_password_request.erb'
+copy_asset_file 'app/views/mailer/user_activation.erb'
+copy_asset_file 'app/views/pages/home.html.haml'
+copy_asset_file 'app/views/user_activations/show.html.haml'
+copy_asset_file 'app/views/user_sessions/new.html.haml'
 copy_asset_file 'app/views/users/_form.html.haml'
 copy_asset_file 'app/views/users/_user.html.haml'
 copy_asset_file 'app/views/users/edit.html.haml'
 copy_asset_file 'app/views/users/new.html.haml'
 copy_asset_file 'app/views/users/show.html.haml'
-copy_asset_file 'app/views/user_sessions/new.html.haml'
-copy_asset_file 'config/routes.rb'
-copy_asset_file 'config/locales/en.yml'
-copy_asset_file 'config/initializers/requires.rb'
-copy_asset_file 'config/initializers/time_formats.rb'
-copy_asset_file 'config/initializers/errors.rb'
+copy_asset_file 'config/environments/staging.rb'
 copy_asset_file 'config/initializers/action_mailer_configs.rb'
 copy_asset_file 'config/initializers/aws.rb'
 copy_asset_file 'config/initializers/bigdecimal_segfault_fix.rb'
+copy_asset_file 'config/initializers/errors.rb'
 copy_asset_file 'config/initializers/formtastic_config.rb'
 copy_asset_file 'config/initializers/mocks.rb'
 copy_asset_file 'config/initializers/noisy_attr_accessible.rb'
 copy_asset_file 'config/initializers/paperclip.rb'
-copy_asset_file 'config/environments/staging.rb'
-copy_asset_file 'lib/tasks/paperclip_tasks.rake'
+copy_asset_file 'config/initializers/requires.rb'
+copy_asset_file 'config/initializers/time_formats.rb'
+copy_asset_file 'config/locales/en.yml'
+copy_asset_file 'config/routes.rb'
+copy_asset_file 'db/migrate/20090805175804_create_users.rb'
 copy_asset_file 'lib/tasks/heroku_gems.rake'
+copy_asset_file 'lib/tasks/paperclip_tasks.rake'
 copy_asset_file 'public/images/default_medium_avatar.jpg'
 copy_asset_file 'public/images/default_small_avatar.jpg'
 copy_asset_file 'public/javascripts/application.js'
 copy_asset_file 'public/stylesheets/screen.css'
 copy_asset_file 'test/factories.rb'
 copy_asset_file 'test/functional/application_controller_test.rb'
+copy_asset_file 'test/functional/pages_controller_test.rb'
+copy_asset_file 'test/functional/user_activations_controller_test.rb'
 copy_asset_file 'test/functional/user_sessions_controller_test.rb'
 copy_asset_file 'test/functional/users_controller_test.rb'
-copy_asset_file 'test/unit/user_session_test.rb'
-copy_asset_file 'test/unit/user_test.rb'
-copy_asset_file 'test/unit/helpers/application_helper_test.rb'
-copy_asset_file 'test/test_helper.rb'
+copy_asset_file 'test/integration/signup_test.rb'
+copy_asset_file 'test/javascript/spec_helper.js'
 copy_asset_file 'test/shoulda_macros/assert_select.rb'
 copy_asset_file 'test/shoulda_macros/authlogic.rb'
 copy_asset_file 'test/shoulda_macros/functionals.rb'
@@ -127,7 +137,13 @@ copy_asset_file 'test/shoulda_macros/integration.rb'
 copy_asset_file 'test/shoulda_macros/named_scope.rb'
 copy_asset_file 'test/shoulda_macros/pagination.rb'
 copy_asset_file 'test/shoulda_macros/paperclip.rb'
-copy_asset_file 'test/javascript/spec_helper.js'
+copy_asset_file 'test/test_helper.rb'
+copy_asset_file 'test/unit/helpers/application_helper_test.rb'
+copy_asset_file 'test/unit/helpers/pages_helper_test.rb'
+copy_asset_file 'test/unit/mailer_test.rb'
+copy_asset_file 'test/unit/user_activation_test.rb'
+copy_asset_file 'test/unit/user_session_test.rb'
+copy_asset_file 'test/unit/user_test.rb'
 
 append_file "Rakefile", read_asset_file('Rakefile.fragment')
 append_file "config/environments/development.rb", "\nHOST = 'localhost'"
@@ -168,6 +184,12 @@ file 'app/views/layouts/application.html.haml',
             = link_to current_user, current_user
           .logout
             = link_to "Logout", user_session_url, :method => :delete
+        - else
+          .login
+            = link_to "Login", login_url
+          or
+          .signup
+            = link_to "Signup for a new account", signup_url
     #content
       = render :partial => 'layouts/flashes'
       = yield

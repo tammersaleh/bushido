@@ -4,8 +4,8 @@ set -e
 
 clear 
 
-rm gold/log/*.log
-rm gold/db/schema.rb
+rm -f gold/log/*.log
+rm -f gold/db/schema.rb
 
 cd /tmp
   rm -rf test-app 
