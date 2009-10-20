@@ -2,11 +2,7 @@ h1. Instant Rails App Template
 
 To use: @rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb@
 
-This is the template I use on my new applications.  It's very specifically
-geared for the tools I use, and includes some of my coding idioms.  The
-"gold":http://github.com/tsaleh/instant-rails-app/tree/master/gold directory is
-a great example of what an app created with this template will end up looking
-like.
+This is the template I use on my new applications.  It's very specifically geared for the tools I use, and includes some of my coding idioms.  The "gold":http://github.com/tsaleh/instant-rails-app/tree/master/gold directory is a great example of what an app created with this template will end up looking like.
 
 h2. This template includes:
 
