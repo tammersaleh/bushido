@@ -6,7 +6,10 @@ h2. This template includes:
 
 h3. Code
 
-* Full user system with authentication (Authlogic)
+* Full user system 
+** Authentication via Authlogic, 
+** Streamlined user registration requiring just email address
+** User confirmation/activation
 * User avatars via paperclip
 * Blueprint based default style
 * Useful Shoulda testing macros
@@ -26,8 +29,6 @@ h3. Plugins & Gems:
 
 h3. Todo:
 
-* Add "Auth Helpers":http://github.com/josevalim/auth_helpers for user activation and password reset functionality
-* Add "High Voltage":http://github.com/thoughtbot/high_voltage for semi-static pages
 * Add "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
 * Add protected assignment explosion
 * Add "FakeWeb":http://github.com/chrisk/fakeweb/ for tests.
