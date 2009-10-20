@@ -9,7 +9,7 @@ class CreateUsers < ActiveRecord::Migration
 
       t.string  :persistence_token 
       t.string  :perishable_token 
-      t.boolean :active, :default => true, :null => false
+      t.boolean :active, :default => false, :null => false
 
       t.string  :photo_file_name
       t.string  :photo_content_type

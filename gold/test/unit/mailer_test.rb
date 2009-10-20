@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class MailerTest < ActionMailer::TestCase
-  %w(create_confirmation update_confirmation reset_password resend_confirmation).each do |email_type|
+  %w(
+    user_activation
+    reset_password_request
+  ).each do |email_type|
     context "A #{email_type.humanize} email" do
       setup do
         @user = Factory(:user, :email => 'recipient@email.com', :perishable_token => '0123456789')

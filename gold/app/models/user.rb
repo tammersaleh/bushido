@@ -14,10 +14,18 @@ class User < ActiveRecord::Base
                     :s3_credentials => { :access_key_id     => S3_KEY, 
                                          :secret_access_key => S3_SECRET }
 
-  validates_presence_of :password, :on => :create
-  validates_confirmation_of :password, :if => :require_password?
+  named_scope :active, :conditions => {:active => true}
+
+  validates_presence_of :password, :if => :require_password?
+  validates_confirmation_of :password, :if => :password_changed?
   validates_presence_of :email
-  validates_presence_of :name
+  validates_presence_of :name, :if => :active?
+
+  after_create :send_activation_email, :unless => :active?
+
+  def require_password?
+    active? and crypted_password.blank?
+  end
 
   def to_s
     name
@@ -25,6 +33,12 @@ class User < ActiveRecord::Base
 
   def destroy
     update_attributes!(:active => false)
+  end
+
+  private
+
+  def send_activation_email
+    Mailer.deliver_user_activation(self)
   end
 end
 

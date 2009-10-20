@@ -1,1 +1,5 @@
-= render :partial => 'form'
+- semantic_form_for @user, :html => {:multipart => true} do |form|
+  = form.input :email
+    
+  - form.buttons do
+    = form.commit_button "Sign up!"
