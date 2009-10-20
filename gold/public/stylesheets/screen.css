@@ -1,47 +1,16 @@
-html,body {height:100%;}
-
-body {
-  font: 11px/1.5em "Lucida Grande", Verdana, Arial, sans-serif;
-  color: #231710;
-}
-
-a {
-  font-family: "Lucida Grande", Verdana, Arial, sans-serif;
-  font-weight: bold;
-  color: #ff6147;
-}
-
-hr {
-  height:0px;
-  border-top: 1px solid #dedede;
-  border-bottom: 1px solid #fff;
-}
-
-#header, #footer {
+#header {
   background-color: #c3faf5;
   border-bottom: 1px solid #42b4aa;
-  border-top: 1px solid #c3f9f5;
 }
 
-#header h1 {
-  text-indent:-9999px;
-  background-image: url('/images/logo.png');
-  width:302px;
-  height:55px;
-  margin:0;
-}
-
-#header a#close_sidebar {
-  margin: 1.5em 1.25em 0 0;
-  display:block;
-  text-indent:-9999px;
-  background-image: url('/images/close.png');
-  height:17px;
-  width:17px;
-}
-
-#header #sidebar_links {
-  float: right;
+#footer {
+  background-color: #c3faf5;
+  border-top: 1px solid #42b4aa;
+  padding: 1em;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
 }
 
 #header #session_links {
@@ -60,58 +29,11 @@ hr {
 
 .navigation, .flash {
   background-color: #4bcdc1;
-  xborder-top: 1px solid #c3f9f5;
+  border-top: 1px solid #c3f9f5;
   border-bottom: 1px solid #42b4aa;
   padding: 0;
   margin:  0 0 1px 0;
 }
-
-div#filter_notes {
-  background-color: #e3e3e3;
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #e7e7e7;
-  padding: 0;
-  margin: 0;
-}
-
-#filter_notes h3 {
-  cursor: pointer;
-  font-size: 1.1em;
-  font-weight:bold;
-  text-align: center;
-  padding-top: 1em;
-}
-
-#participating_company_filters {
-  border-top: 1px solid #c8c8c8;
-  padding: 15px 15px 20px 15px;
-  background-color: #f5f5f5;
-}
-
-#filter_notes #participating_company_filters input {
-  display:none;
-}
-
-#filter_notes #participating_company_filters input + label {
-  display:inline-block;
-  cursor: pointer;
-  font: 11px "Times New Roman", Times, Georgia, serif;
-  font-style: italic;
-  color: #838383;
-  background-color: none;
-  border: 1px solid #e3e3e3;
-  padding:4px 6px;
-  -moz-border-radius: 3px;
-  margin: 0 .25em .75em 0;
-}
-
-#filter_notes #participating_company_filters input:checked + label {
-  cursor: pointer;
-  color: #231710;
-  background-color: #e3e3e3;
-}
-
-
 
 ul#navigation * {
   display: inline;
@@ -151,209 +73,7 @@ ul#navigation * {
   margin-left: 1em;
 }
 
-#content { 
-  margin-bottom:7em;
-}
-
-#footer {
-  border-top: 1px solid #efefef;
-  padding: 1em;
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-}
-
-#footer .welcome {
-  float:left;
-}
-
-#footer .logout {
-  float:right;
-}
-
-#footer #plugin-download {
-  padding-top:.5em;
-  clear:both;
-}
-
 .hidden {
   display: none;
-}
-
-body.pages-show .page_url {
-  font-size: 0.8em;
-  color: #c3f9f5;
-  padding-left: 5px;
-}
-
-form#new_note #note_body_input textarea {
-  height: 100px;
-}
-
-.notes .note .selected_text_regexp {
-  display: none;
-}
-
-/* Used for highlighting a note in the sidebar when hovering over the selected
- * text in the page */
-.notes .highlighted_note {
-  background: yellow;
-}
-
-.user .job_title {
-  display: inline;
-}
-
-.user .company_name {
-  display: inline;
-}
-
-.user .photo {
-  float: left;
-  padding: 0 10px 10px 0;
-}
- 
-.user ul.social_links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.user ul.social_links li {
-  display: inline;
-  padding: 0;
-  margin: 0;
-}
-
-.user ul.social_links li:before { content: "| "; }
-.user ul.social_links li:first-child:before { content: ""; }
-
-.user ul.user_admin_links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.user ul.user_admin_links li {
-  display: inline;
-  padding: 0;
-  margin: 0;
-}
-
-.user ul.user_admin_links li:before { content: "| "; }
-.user ul.user_admin_links li:first-child:before { content: ""; }
-
-ul.notes { 
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li.note {
-  padding: 0;
-  margin: 0 0 1em 0;
-  border-top: 1px solid #c8c8c8;
-  position:relative;
-}
-
-.note .note_marker {
-  display:block;
-  background-color:gray;
-  height:22px;
-  width:22px;
-  position:absolute;
-  top:0;
-  right:0;
-}
-.note .note_marker.comment { background: url(/images/triangle-yellow.png) no-repeat; }
-.note .note_marker.context { background: url(/images/triangle-green.png) no-repeat; }
-.note .note_marker.correction { background: url(/images/triangle-red.png) no-repeat; }
-
-.note .note_type {
-  cursor: pointer;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  font: 11px "Times New Roman", Times, Georgia, serif;
-  display:block;
-  margin:0;
-  padding: .25em ;
-  font-weight: normal;
-  font-style:italic;
-  text-transform: capitalize;
-}
-
-
-
-
-.note .note_type.comment { background-color: #fdedb0; color: #b7982c; }
-.note .note_type.context { background-color: #d5ebc4; color: #678f47; }
-.note .note_type.correction { background-color: #ffbaba; color: #b43636; }
-
-.note .note_type:after {
-  content: ":";
-}
-
-.note .title {
-  display:inline-block;
-  color: #231710;
-  margin-top:1em;
-  font: 1.1em/1.5em "Lucida Grande", Verdana, Arial, sans-serif;
-  font-weight:bold;
-  cursor: pointer;
-}
-
-.note .owner:before {
-  content: "– ";
-}
-.note .owner {
-  display:inline-block;
-  font-size: 1em;
-}
-
-.note .contents {
-  padding: 15px;
-}
-
-.note a.new_note_counterpoint_link:before {
-  content: "+ ";
-}
-
-.note a.new_note_counterpoint_link {
-  display: block;
-  margin-top: 1em;
-}
-
-ol.counterpoints {
-  margin-top: 1em;
-  list-style-position: inside;
-}
-
-li.counterpoint .body, li.counterpoint .owner {
-  display:inline-block;
-}
-
-.notes .note .selected_text_body {
-  display: inline;
-  font-style: italic;
-}
-
-.note .user {
-  padding: 0;
-  margin: 0;
-  padding-left: 15px;
-}
-
-
-.openable { 
-  padding-left: 15px;
-}
-.closed>.openable { background: url(/images/arrow-right.png) no-repeat; background-position: 1px 4px; }
-.opened>.openable { background: url(/images/arrow-down.png) no-repeat; background-position: 2px 5px; }
-
-
-#notifier_text { display: none; }
-
-.company_representatives_by_company .user > * {
-  display: inline;
 }
 

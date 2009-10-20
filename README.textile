@@ -32,3 +32,4 @@ h3. Todo:
 * Add "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
 * Add protected assignment explosion
 * Add "FakeWeb":http://github.com/chrisk/fakeweb/ for tests.
+* Add less
