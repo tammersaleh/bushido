@@ -6,21 +6,21 @@ This is the template I use on my new applications.  It's very specifically geare
 
 h2. This template includes:
 
-h4. Full user system 
+h3. Full user system 
 
 * Authentication via Authlogic, 
 * Streamlined user registration initially requiring just email address
 * User confirmation/activation
 
-h4. Configured for Heroku
+h3. Configured for Heroku
 
 Including @.gems@ manifest and automatic app creation.
 
 _This template will create a new, free, heroku app automatically.  *BEWARE*_
 
-h4. User avatars in Amazon S3 via Paperclip
+h3. User avatars in Amazon S3 via Paperclip
 
-h4. Blueprint based default style
+h3. Blueprint based default style
 
 h3. Plugins & Gems:
 
