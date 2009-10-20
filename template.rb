@@ -1,10 +1,11 @@
 require 'open-uri'
 
-@app_name       = File.basename(@root)
-@template_root  = File.dirname(template)
-@jquery_version = "1.3.2"
-@human_app_name = @app_name.gsub(/[-_]/, ' ').humanize
-@title_app_name = @app_name.gsub(/[-_]/, ' ').titlecase
+@app_name        = File.basename(@root)
+@heroku_app_name = File.basename(@root).gsub('_', '-')
+@template_root   = File.dirname(template)
+@jquery_version  = "1.3.2"
+@human_app_name  = @app_name.gsub(/[-_]/, ' ').humanize
+@title_app_name  = @app_name.gsub(/[-_]/, ' ').titlecase
 
 raise "The template path must be absolute." unless @template_root =~ /^(\/|http:\/\/)/
 
@@ -146,9 +147,9 @@ copy_asset_file 'test/unit/user_session_test.rb'
 copy_asset_file 'test/unit/user_test.rb'
 
 append_file "Rakefile", read_asset_file('Rakefile.fragment')
-append_file "config/environments/production.rb",  "\n\nHOST = '#{@app_name}.heroku.com'"
-append_file "config/environments/staging.rb",     "\n\nHOST = '#{@app_name}-staging.heroku.com'"
-append_file "config/environments/development.rb", "\n\nHOST = '#{@app_name}.local'"
+append_file "config/environments/production.rb",  "\n\nHOST = '#{@heroku_app_name}.heroku.com'"
+append_file "config/environments/staging.rb",     "\n\nHOST = '#{@heroku_app_name}-staging.heroku.com'"
+append_file "config/environments/development.rb", "\n\nHOST = '#{@heroku_app_name}.local'"
 append_file "config/environments/test.rb",        "\n\nHOST = 'localhost'"
 
 gsub_file 'app/controllers/application_controller.rb', /(^end\b)/mi do |match|
@@ -231,14 +232,14 @@ run "git commit -m 'Intial application creation using #{template}.'"
 if `which heroku`.blank?
   puts "Skipping heroku app setup, as heroku gem not installed."
 else
-  if `heroku list | grep -x #{@app_name}-staging`.blank?
-    p run("heroku create #{@app_name}-staging --remote heroku-staging")
+  if `heroku list | grep -x #{@heroku_app_name}-staging`.blank?
+    p run("heroku create #{@heroku_app_name}-staging --remote heroku-staging")
     run "git push heroku-staging master"
     run "heroku rake db:migrate"
     run "heroku restart"
     run "heroku open"
   else
-    puts "Skipping heroku app setup, as #{@app_name}-staging already seems to exist."
+    puts "Skipping heroku app setup, as #{@heroku_app_name}-staging already seems to exist."
   end
 end
 

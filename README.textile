@@ -2,17 +2,25 @@ h1. Instant Rails App Template
 
 To use: @rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb@
 
+This is the template I use on my new applications.  It's very specifically
+geared for the tools I use, and includes some of my coding idioms.  The
+"gold":http://github.com/tsaleh/instant-rails-app/tree/master/gold directory is
+a great example of what an app created with this template will end up looking
+like.
+
 h2. This template includes:
 
 h4. Full user system 
 
 * Authentication via Authlogic, 
-* Streamlined user registration requiring just email address
+* Streamlined user registration initially requiring just email address
 * User confirmation/activation
 
 h4. Configured for Heroku
 
 Including @.gems@ manifest and automatic app creation.
+
+_This template will create a new, free, heroku app automatically.  *BEWARE*_
 
 h4. User avatars in Amazon S3 via Paperclip
 
@@ -20,22 +28,23 @@ h4. Blueprint based default style
 
 h3. Plugins & Gems:
 
-* Inherited Resources
-* Authlogic
-* HAML
-* Shoulda test suite and extra macros
-* Formtastic (with validation reflection plugin)
-* Hoptoad
-* Blue Ridge JS testing framework
-* will_paginate
-* Paperclip
-* RedCloth
-* Blueprint CSS framework
+* "Inherited Resources":http://github.com/josevalim/inherited_resources/
+* "Authlogic":http://github.com/binarylogic/authlogic/
+* "HAML":http://haml-lang.com/
+* "Blueprint":http://www.blueprintcss.org/ CSS framework
+* "Shoulda":http://github.com/thoughtbot/shoulda test suite and extra macros
+* "Formtastic":http://github.com/justinfrench/formtastic/ (with validation reflection plugin)
+* "Hoptoad":http://www.hoptoadapp.com/
+* "Blue Ridge":http://github.com/relevance/blue-ridge JS testing framework
+* "will_paginate":http://wiki.github.com/mislav/will_paginate
+* "Paperclip":http://github.com/thoughtbot/paperclip/
+* "RedCloth":http://redcloth.org/
 
 h3. Todo:
 
+* Add user password reset functionality
 * Add "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
 * Add protected assignment explosion
 * Add "FakeWeb":http://github.com/chrisk/fakeweb/ for tests.
-* Add less
-* Add Heroku app creation
+* Add "less":http://lesscss.org/
+

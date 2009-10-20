@@ -3,6 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 require 'action_view/test_case'
 require 'fakeweb'
+require 'factory_girl'
+
+begin require 'redgreen'; rescue LoadError; end
 
 FakeWeb.allow_net_connect = false
 
