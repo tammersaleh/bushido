@@ -1,7 +1,7 @@
 
 development:
   adapter: mysql
-  database: test-app_development
+  database: gold_development
   username: root
   password: 
   host: localhost
@@ -9,7 +9,7 @@ development:
   
 test:
   adapter: mysql
-  database: test-app_test
+  database: gold_test
   username: root
   password: 
   host: localhost

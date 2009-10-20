@@ -4,21 +4,26 @@ To use: @rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/te
 
 h2. This template includes:
 
-h3. Code
+h4. Full user system 
 
-* Full user system 
-** Authentication via Authlogic, 
-** Streamlined user registration requiring just email address
-** User confirmation/activation
-* User avatars via paperclip
-* Blueprint based default style
-* Useful Shoulda testing macros
+* Authentication via Authlogic, 
+* Streamlined user registration requiring just email address
+* User confirmation/activation
+
+h4. Configured for Heroku
+
+Including @.gems@ manifest and automatic app creation.
+
+h4. User avatars in Amazon S3 via Paperclip
+
+h4. Blueprint based default style
 
 h3. Plugins & Gems:
 
 * Inherited Resources
 * Authlogic
 * HAML
+* Shoulda test suite and extra macros
 * Formtastic (with validation reflection plugin)
 * Hoptoad
 * Blue Ridge JS testing framework

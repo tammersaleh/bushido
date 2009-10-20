@@ -146,12 +146,10 @@ copy_asset_file 'test/unit/user_session_test.rb'
 copy_asset_file 'test/unit/user_test.rb'
 
 append_file "Rakefile", read_asset_file('Rakefile.fragment')
-append_file "config/environments/development.rb", "\nHOST = 'localhost'"
-append_file "config/environments/test.rb", "
-HOST = 'localhost'
-require 'factory_girl'
-begin require 'redgreen'; rescue LoadError; end
-"
+append_file "config/environments/production.rb",  "\n\nHOST = '#{@app_name}.heroku.com'"
+append_file "config/environments/staging.rb",     "\n\nHOST = '#{@app_name}-staging.heroku.com'"
+append_file "config/environments/development.rb", "\n\nHOST = '#{@app_name}.local'"
+append_file "config/environments/test.rb",        "\n\nHOST = 'localhost'"
 
 gsub_file 'app/controllers/application_controller.rb', /(^end\b)/mi do |match|
   read_asset_file('app/controllers/application_controller.rb.fragment') + match
@@ -229,3 +227,18 @@ run 'rm log/*'
 git :init
 git :add => '.'
 run "git commit -m 'Intial application creation using #{template}.'"
+
+if `which heroku`.blank?
+  puts "Skipping heroku app setup, as heroku gem not installed."
+else
+  if `heroku list | grep -x #{@app_name}-staging`.blank?
+    p run("heroku create #{@app_name}-staging --remote heroku-staging")
+    run "git push heroku-staging master"
+    run "heroku rake db:migrate"
+    run "heroku restart"
+    run "heroku open"
+  else
+    puts "Skipping heroku app setup, as #{@app_name}-staging already seems to exist."
+  end
+end
+
