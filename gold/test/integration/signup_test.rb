@@ -29,7 +29,6 @@ class SignupTest < ActionController::IntegrationTest
 
       context "then filling in the activation form" do
         setup do
-          save_and_open_page
           fill_in "name", :with => "Joe Public"
           fill_in "password", :with => "s3kret"
           fill_in "password confirmation", :with => "s3kret"
