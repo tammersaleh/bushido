@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  attr_accessible :name, :email, :photo, :password, :password_confirmation
+
   acts_as_authentic do |config|
     config.validate_password_field = false
     config.validate_email_field    = false
@@ -32,7 +34,8 @@ class User < ActiveRecord::Base
   end
 
   def destroy
-    update_attributes!(:active => false)
+    self.active = false
+    save!
   end
 
   private

@@ -46,11 +46,7 @@ _*AGAIN:* This template will create a new, free, heroku app automatically._
 
 h2. Todo:
 
-* Outgoing email configuration (with "the SMTP TLS fix":http://github.com/ambethia/smtp-tls)
-* User password reset functionality
+* User password resets
 * "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
-* Protected assignment explosion
-* "FakeWeb":http://github.com/chrisk/fakeweb/ for tests.
 * "less":http://lesscss.org/
-* "Trusted Params":http://github.com/ryanb/trusted-params
 

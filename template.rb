@@ -43,6 +43,7 @@ inside "public/javascripts" do
   run "curl -L http://jqueryjs.googlecode.com/files/jquery-#{@jquery_version}.js -o jquery-#{@jquery_version}.js"
 end
 
+plugin 'trusted-params',        :git => "git://github.com/ryanb/trusted-params.git"
 plugin 'hoptoad_notifier',      :git => "git://github.com/thoughtbot/hoptoad_notifier.git"
 plugin 'high_voltage',          :git => "git://github.com/thoughtbot/high_voltage.git"
 plugin 'limerick_rake',         :git => "git://github.com/thoughtbot/limerick_rake.git"
