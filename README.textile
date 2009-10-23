@@ -47,6 +47,6 @@ _*AGAIN:* This template will create a new, free, heroku app automatically._
 h2. Todo:
 
 * User password resets
-* "Friendly Identifier":http://github.com/krasivotokak/friendly-identifier or slugalicious for slugs
+* Something to deal with url slugs (such as http://github.com/norman/friendly_id/)
 * "less":http://lesscss.org/
 
