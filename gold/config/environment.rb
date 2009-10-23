@@ -7,6 +7,7 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
+  config.gem 'ambethia-smtp-tls', :lib => 'smtp-tls', :source => 'http://gems.github.com', :version => '>= 1.1.2'
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com', :version => '>= 2.3.11'
   config.gem 'thoughtbot-paperclip', :lib => 'paperclip', :source => 'http://gems.github.com', :version => '>= 2.3.1'
   config.gem 'josevalim-inherited_resources', :lib => 'inherited_resources', :source => 'http://gems.github.com', :version => '>= 0.8.5'

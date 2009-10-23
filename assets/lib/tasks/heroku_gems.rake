@@ -9,8 +9,6 @@ namespace :gems do
 			installed_gems << w.first
 		end
 
-		p installed_gems
-
     gems = Rails.configuration.gems
     
     # output .gems

@@ -8,8 +8,6 @@ if [ $# == 1 ]; then
 else
   diff -wBrq -x '*.swp' \
              -x '.git' \
-             -x 'hoptoad.rb' \
-             -x 'session_store.rb' \
              -x 'database.yml' \
              gold /tmp/tsaleh-test-app | less
 fi

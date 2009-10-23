@@ -6,7 +6,7 @@
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
   :session_key => "_platos_forms_session",
-  :secret      => "8485d20b70b4da7641a0c7ebdb451991"
+  :secret      => ENV["SESSION_STORE_KEY"]
 }
 
 # Use the database for sessions instead of the cookie-based default,

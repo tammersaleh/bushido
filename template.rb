@@ -17,14 +17,15 @@ def copy_asset_file(filename)
   file filename, read_asset_file(filename)
 end
 
-hoptoad_key = ask("What's your hoptoad key?  GIVE IT TO ME!")
-if hoptoad_key.present?
-  initializer 'hoptoad.rb', 
-%Q{HoptoadNotifier.configure do |config|
-  config.api_key = '#{hoptoad_key}'
-end
-}
-end
+hoptoad_key    = ask "What's your hoptoad key?  GIVE IT TO ME!"
+gmail_username = ask "What gmail username do you want to use for outgoing email?"
+gmail_password = ask "What gmail password do you want to use for outgoing email?"
+s3_key         = ask "What's your S3 key?"
+s3_secret      = ask "What's your S3 secret?"
+s3_bucket      = @app_name
+
+datestring = Time.now.strftime("%j %U %w %A %B %d %Y %I %M %S %p %Z")
+session_store_key = Digest::MD5.hexdigest("#{@app_name} #{datestring}")
 
 # Delete unnecessary files
 run "rm README"
@@ -55,33 +56,21 @@ gem 'justinfrench-formtastic',       :lib => 'formtastic',          :source => '
 gem 'josevalim-inherited_resources', :lib => 'inherited_resources', :source => 'http://gems.github.com', :version => '>= 0.8.5'
 gem 'thoughtbot-paperclip',          :lib => 'paperclip',           :source => 'http://gems.github.com', :version => '>= 2.3.1'
 gem 'mislav-will_paginate',          :lib => 'will_paginate',       :source => 'http://gems.github.com', :version => '>= 2.3.11'
+gem 'ambethia-smtp-tls',             :lib => 'smtp-tls',            :source => 'http://gems.github.com', :version => '>= 1.1.2'
 
 # Test gems
 gem 'mocha',    :env => "test"
 gem 'nokogiri', :env => "test", :lib => false
 gem 'webrat',   :env => "test"               
 gem 'fakeweb',  :env => "test"               
-gem 'thoughtbot-factory_girl',   :lib => "factory_girl",   :source => "http://gems.github.com", :env => "test"
-gem 'thoughtbot-shoulda',        :lib => "shoulda",        :source => "http://gems.github.com", :env => "test"
+gem 'thoughtbot-factory_girl', :lib => "factory_girl", :source => "http://gems.github.com", :env => "test"
+gem 'thoughtbot-shoulda',      :lib => "shoulda",      :source => "http://gems.github.com", :env => "test"
 
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'
 run "haml --rails ."
 
 file '.gitignore', read_asset_file('gitignore')
-
-numbers = %w(0 1 2 3 4 5 6 7 8 9)
-alphabet = %w(a b c d e f g h i j
-              k l m n o p q r s t 
-              u v w x y z)
-alpha_num = numbers + alphabet + alphabet.map {|c| c.upcase}
-
-initializer 'session_store.rb', <<-END
-ActionController::Base.session = { 
-  :session_key => '_#{@app_name}_session', 
-  :secret => '#{(1..40).map {|i| alpha_num[rand(alpha_num.size)] }.join}' 
-}
-END
 
 copy_asset_file 'app/controllers/pages_controller.rb'
 copy_asset_file 'app/controllers/user_activations_controller.rb'
@@ -105,10 +94,10 @@ copy_asset_file 'app/views/users/new.html.haml'
 copy_asset_file 'app/views/users/show.html.haml'
 copy_asset_file 'config/environments/staging.rb'
 copy_asset_file 'config/initializers/action_mailer_configs.rb'
-copy_asset_file 'config/initializers/aws.rb'
 copy_asset_file 'config/initializers/bigdecimal_segfault_fix.rb'
 copy_asset_file 'config/initializers/errors.rb'
 copy_asset_file 'config/initializers/formtastic_config.rb'
+copy_asset_file 'config/initializers/hoptoad.rb'
 copy_asset_file 'config/initializers/mocks.rb'
 copy_asset_file 'config/initializers/noisy_attr_accessible.rb'
 copy_asset_file 'config/initializers/paperclip.rb'
@@ -158,6 +147,10 @@ end
 
 gsub_file 'app/helpers/application_helper.rb', /(^end\b)/mi do |match|
   read_asset_file('app/helpers/application_helper.rb.fragment') + match
+end
+
+gsub_file 'config/initializers/session_store.rb', /:secret(\s*)=> '(.*)'/ do |match|
+  ":secret      => ENV['SESSION_STORE_KEY']"
 end
 
 file 'app/views/layouts/application.html.haml', 
@@ -230,16 +223,29 @@ git :add => '.'
 run "git commit -m 'Intial application creation using #{template}.'"
 
 if `which heroku`.blank?
-  puts "Skipping heroku app setup, as heroku gem not installed."
+  puts "Skipping Heroku app setup, as heroku gem not installed."
 else
   if `heroku list | grep -x #{@heroku_app_name}-staging`.blank?
-    p run("heroku create #{@heroku_app_name}-staging --remote heroku-staging")
-    run "git push heroku-staging master"
-    run "heroku rake db:migrate"
-    run "heroku restart"
-    run "heroku open"
+    out = run("heroku create #{@heroku_app_name}-staging --remote heroku-staging")
+    if out =~ /^Created http/
+      run "heroku config:add RACK_ENV=staging"
+      run "heroku config:add HOPTOAD_KEY='#{hoptoad_key}'"
+      run "heroku config:add GMAIL_USERNAME='#{gmail_username}'"
+      run "heroku config:add GMAIL_PASSWORD='#{gmail_password}'"
+      run "heroku config:add SESSION_STORE_KEY='#{session_store_key}'"
+      run "heroku config:add S3_KEY='#{s3_key}'"
+      run "heroku config:add S3_SECRET='#{s3_secret}'"
+      run "heroku config:add S3_BUCKET='#{s3_bucket}'"
+      run "git push heroku-staging master"
+      run "heroku rake db:migrate"
+      run "heroku restart"
+      run "heroku open"
+    else
+      puts "Skipping rest of heroku configuration, as there was an error talking to Heroku:"
+      puts "  #{out}"
+    end
   else
-    puts "Skipping heroku app setup, as #{@heroku_app_name}-staging already seems to exist."
+    puts "Skipping Heroku app setup, as #{@heroku_app_name}-staging already seems to exist."
   end
 end
 

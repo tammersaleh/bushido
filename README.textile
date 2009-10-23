@@ -1,7 +1,5 @@
 h1. Instant Rails App Template
 
-To use: @rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb@
-
 This is the template I use on my new applications.  It's very specifically geared for the tools I use, and includes some of my coding idioms.  The "gold":http://github.com/tsaleh/instant-rails-app/tree/master/gold directory is a great example of what an app created with this template will end up looking like.
 
 h2. This template includes:
@@ -36,11 +34,23 @@ h3. Plugins & Gems:
 * "Paperclip":http://github.com/thoughtbot/paperclip/
 * "RedCloth":http://redcloth.org/
 
-h3. Todo:
+h2. To use: 
 
-* Add user password reset functionality
-* Add "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
-* Add protected assignment explosion
-* Add "FakeWeb":http://github.com/chrisk/fakeweb/ for tests.
-* Add "less":http://lesscss.org/
+* It's a good idea to have some info handy, including:
+** The "hoptoad key":http://hoptoadapp.com for the new project
+** A gmail email address and password for configuring outgoing email
+** The S3 key and secret for paperclip avatars
+* Once you've got that, run: @rails myapp -m http://github.com/tsaleh/instant-rails-app/raw/master/template.rb@
+
+_*AGAIN:* This template will create a new, free, heroku app automatically._
+
+h2. Todo:
+
+* Outgoing email configuration (with "the SMTP TLS fix":http://github.com/ambethia/smtp-tls)
+* User password reset functionality
+* "Friendly Identifier":http://github.com/thoughtbot/friendly-identifier or slugalicious for slugs
+* Protected assignment explosion
+* "FakeWeb":http://github.com/chrisk/fakeweb/ for tests.
+* "less":http://lesscss.org/
+* "Trusted Params":http://github.com/ryanb/trusted-params
 
