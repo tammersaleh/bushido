@@ -223,8 +223,16 @@ git :init
 git :add => '.'
 run "git commit -m 'Intial application creation using #{template}.'"
 
+begin
+  puts "Creating #{s3_bucket} bucket in S3."
+  require 'right_aws'
+  RightAws::S3Interface.new(s3_key, s3_secret).create_bucket(s3_bucket)
+rescue
+  puts "** Failed to create the #{s3_bucket} bucket"
+end
+
 if `which heroku`.blank?
-  puts "Skipping Heroku app setup, as heroku gem not installed."
+  puts "** Skipping Heroku app setup, as heroku gem not installed."
 else
   if `heroku list | grep -x #{@heroku_app_name}-staging`.blank?
     out = run("heroku create #{@heroku_app_name}-staging --remote heroku-staging")
@@ -242,11 +250,11 @@ else
       run "heroku restart"
       run "heroku open"
     else
-      puts "Skipping rest of heroku configuration, as there was an error talking to Heroku:"
-      puts "  #{out}"
+      puts "** Skipping rest of heroku configuration, as there was an error talking to Heroku:"
+      puts "**   #{out}"
     end
   else
-    puts "Skipping Heroku app setup, as #{@heroku_app_name}-staging already seems to exist."
+    puts "** Skipping Heroku app setup, as #{@heroku_app_name}-staging already seems to exist."
   end
 end
 
