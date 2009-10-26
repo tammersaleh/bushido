@@ -8,6 +8,6 @@ coverage*
 *.swp
 tmp/restart.txt
 public/system
-config/hoptoad_env.rb
+config/heroku_env.rb
 
 !.keep
