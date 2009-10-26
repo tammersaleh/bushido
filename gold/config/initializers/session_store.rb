@@ -5,8 +5,8 @@
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
-  :session_key => "_platos_forms_session",
-  :secret      => ENV["SESSION_STORE_KEY"]
+  :key    => "_gold_session",
+  :secret => ENV['SESSION_STORE_KEY']
 }
 
 # Use the database for sessions instead of the cookie-based default,

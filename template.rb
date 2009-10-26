@@ -142,6 +142,10 @@ append_file "config/environments/staging.rb",     "\n\nHOST = '#{@heroku_app_nam
 append_file "config/environments/development.rb", "\n\nHOST = '#{@heroku_app_name}.local'"
 append_file "config/environments/test.rb",        "\n\nHOST = 'localhost'"
 
+gsub_file 'config/environment.rb', /(^Rails::Initializer.run\b)/mi do |match|
+  read_asset_file('config/environment.rb.fragment') + match
+end
+
 gsub_file 'app/controllers/application_controller.rb', /(^end\b)/mi do |match|
   read_asset_file('app/controllers/application_controller.rb.fragment') + match
 end
@@ -151,7 +155,7 @@ gsub_file 'app/helpers/application_helper.rb', /(^end\b)/mi do |match|
 end
 
 gsub_file 'config/initializers/session_store.rb', /:secret(\s*)=> '(.*)'/ do |match|
-  ":secret      => ENV['SESSION_STORE_KEY']"
+  ":secret => ENV['SESSION_STORE_KEY']"
 end
 
 file 'app/views/layouts/application.html.haml', 
@@ -258,3 +262,17 @@ else
   end
 end
 
+file "config/heroku_env.rb", %Q{
+# This file contains the ENV vars necessary to run the app locally.  
+# Some of these values are sensitive, and some are developer specific.
+#
+# DO NOT CHECK THIS FILE INTO VERSION CONTROL
+
+ENV['HOPTOAD_KEY']       = '#{hoptoad_key}'
+ENV['GMAIL_USERNAME']    = '#{gmail_username}'
+ENV['GMAIL_PASSWORD']    = '#{gmail_password}'
+ENV['SESSION_STORE_KEY'] = '#{session_store_key}'
+ENV['S3_KEY']            = '#{s3_key}'
+ENV['S3_SECRET']         = '#{s3_secret}'
+ENV['S3_BUCKET']         = '#{s3_bucket}'
+}

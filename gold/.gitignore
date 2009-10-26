@@ -8,5 +8,6 @@ coverage*
 *.swp
 tmp/restart.txt
 public/system
+config/hoptoad_env.rb
 
 !.keep
