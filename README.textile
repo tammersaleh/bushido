@@ -44,11 +44,11 @@ It's a good idea to have some info handy, including:
 
 Once you've got that, run: 
 
-  rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb
+@rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb@
 
 You can also supply the configuration values on the commandline:
 
-  rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb -- --s3_key=foo
+@rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb -- --s3_key=foo@
 
 Note the extra '--' in there, which must come before the rest of the options.  The supported options are:
 
