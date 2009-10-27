@@ -36,11 +36,27 @@ h3. Plugins & Gems:
 
 h2. To use: 
 
-* It's a good idea to have some info handy, including:
+It's a good idea to have some info handy, including:
+
 ** The "hoptoad key":http://hoptoadapp.com for the new project
 ** A gmail email address and password for configuring outgoing email
 ** The S3 key and secret for paperclip avatars
-* Once you've got that, run: @rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb@
+
+Once you've got that, run: 
+
+  rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb
+
+You can also supply the configuration values on the commandline:
+
+  rails myapp -m http://github.com/tsaleh/bushido/raw/master/template.rb -- --s3_key=foo
+
+Note the extra '--' in there, which must come before the rest of the options.  The supported options are:
+
+* --hoptoad_key
+* --gmail_username
+* --gmail_password
+* --s3_key
+* --s3_secret
 
 _*AGAIN:* This template will create a new, free, heroku app automatically._
 

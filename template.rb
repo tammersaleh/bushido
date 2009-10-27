@@ -17,15 +17,22 @@ def copy_asset_file(filename)
   file filename, read_asset_file(filename)
 end
 
-hoptoad_key    = ask "What's your hoptoad key?  GIVE IT TO ME!"
-gmail_username = ask "What gmail username do you want to use for outgoing email?"
-gmail_password = ask "What gmail password do you want to use for outgoing email?"
-s3_key         = ask "What's your S3 key?"
-s3_secret      = ask "What's your S3 secret?"
-s3_bucket      = @app_name
+def get_value(name, question)
+  value = ARGV.select {|arg| arg.starts_with?("--#{name}=")}.map {|arg| arg.split('=').second }.first
+  value = ask question unless value
+  instance_variable_set("@#{name}", value)
+end
+
+get_value :hoptoad_key,    "What's your hoptoad key?  GIVE IT TO ME!"
+get_value :gmail_username, "What gmail username do you want to use for outgoing email?"
+get_value :gmail_password, "What gmail password do you want to use for outgoing email?"
+get_value :s3_key,         "What's your S3 key?"
+get_value :s3_secret,      "What's your S3 secret?"
+
+@s3_bucket = @app_name
 
 datestring = Time.now.strftime("%j %U %w %A %B %d %Y %I %M %S %p %Z")
-session_store_key = Digest::MD5.hexdigest("#{@app_name} #{datestring}")
+@session_store_key = Digest::MD5.hexdigest("#{@app_name} #{datestring}")
 
 # Delete unnecessary files
 run "rm README"
@@ -228,11 +235,11 @@ git :add => '.'
 run "git commit -m 'Intial application creation using #{template}.'"
 
 begin
-  puts "Creating #{s3_bucket} bucket in S3."
+  puts "Creating #{@s3_bucket} bucket in S3."
   require 'right_aws'
-  RightAws::S3Interface.new(s3_key, s3_secret).create_bucket(s3_bucket)
+  RightAws::S3Interface.new(@s3_key, @s3_secret).create_bucket(@s3_bucket)
 rescue
-  puts "** Failed to create the #{s3_bucket} bucket"
+  puts "** Failed to create the #{@s3_bucket} bucket"
 end
 
 if `which heroku`.blank?
@@ -242,13 +249,13 @@ else
     out = run("heroku create #{@heroku_app_name}-staging --remote heroku-staging")
     if out =~ /^Created http/
       run "heroku config:add RACK_ENV=staging"
-      run "heroku config:add HOPTOAD_KEY='#{hoptoad_key}'"
-      run "heroku config:add GMAIL_USERNAME='#{gmail_username}'"
-      run "heroku config:add GMAIL_PASSWORD='#{gmail_password}'"
-      run "heroku config:add SESSION_STORE_KEY='#{session_store_key}'"
-      run "heroku config:add S3_KEY='#{s3_key}'"
-      run "heroku config:add S3_SECRET='#{s3_secret}'"
-      run "heroku config:add S3_BUCKET='#{s3_bucket}'"
+      run "heroku config:add HOPTOAD_KEY='#{@hoptoad_key}'"
+      run "heroku config:add GMAIL_USERNAME='#{@gmail_username}'"
+      run "heroku config:add GMAIL_PASSWORD='#{@gmail_password}'"
+      run "heroku config:add SESSION_STORE_KEY='#{@session_store_key}'"
+      run "heroku config:add S3_KEY='#{@s3_key}'"
+      run "heroku config:add S3_SECRET='#{@s3_secret}'"
+      run "heroku config:add S3_BUCKET='#{@s3_bucket}'"
       run "git push heroku-staging master"
       run "heroku rake db:migrate"
       run "heroku restart"
@@ -268,11 +275,11 @@ file "config/heroku_env.rb", %Q{
 #
 # DO NOT CHECK THIS FILE INTO VERSION CONTROL
 
-ENV['HOPTOAD_KEY']       = '#{hoptoad_key}'
-ENV['GMAIL_USERNAME']    = '#{gmail_username}'
-ENV['GMAIL_PASSWORD']    = '#{gmail_password}'
-ENV['SESSION_STORE_KEY'] = '#{session_store_key}'
-ENV['S3_KEY']            = '#{s3_key}'
-ENV['S3_SECRET']         = '#{s3_secret}'
-ENV['S3_BUCKET']         = '#{s3_bucket}'
+ENV['HOPTOAD_KEY']       = '#{@hoptoad_key}'
+ENV['GMAIL_USERNAME']    = '#{@gmail_username}'
+ENV['GMAIL_PASSWORD']    = '#{@gmail_password}'
+ENV['SESSION_STORE_KEY'] = '#{@session_store_key}'
+ENV['S3_KEY']            = '#{@s3_key}'
+ENV['S3_SECRET']         = '#{@s3_secret}'
+ENV['S3_BUCKET']         = '#{@s3_bucket}'
 }
