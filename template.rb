@@ -67,12 +67,14 @@ gem 'mislav-will_paginate',          :lib => 'will_paginate',       :source => '
 gem 'ambethia-smtp-tls',             :lib => 'smtp-tls',            :source => 'http://gems.github.com', :version => '>= 1.1.2'
 
 # Test gems
-gem 'mocha',    :env => "test"
 gem 'nokogiri', :env => "test", :lib => false
 gem 'webrat',   :env => "test"               
 gem 'fakeweb',  :env => "test"               
 gem 'thoughtbot-factory_girl', :lib => "factory_girl", :source => "http://gems.github.com", :env => "test"
 gem 'thoughtbot-shoulda',      :lib => "shoulda",      :source => "http://gems.github.com", :env => "test"
+# Mocha *must* come after shoulda.  
+# See http://mediumexposure.com/2009/08/02/getting-rails-233-and-mocha-096-play-nice-testunit-and-shoulda
+gem 'mocha',    :env => "test"
 
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'
