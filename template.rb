@@ -3,7 +3,6 @@ require 'open-uri'
 @app_name        = File.basename(@root)
 @heroku_app_name = File.basename(@root).gsub('_', '-')
 @template_root   = File.dirname(template)
-@jquery_version  = "1.3.2"
 @human_app_name  = @app_name.gsub(/[-_]/, ' ').humanize
 @title_app_name  = @app_name.gsub(/[-_]/, ' ').titlecase
 
@@ -44,10 +43,6 @@ inside "public/stylesheets" do
   run "curl -L http://github.com/joshuaclayton/blueprint-css/tarball/master | tar -xzf -"
   run "mv joshuaclayton-blueprint*/blueprint blueprint"
   run "rm -rf joshuaclayton-blueprint*"
-end
-
-inside "public/javascripts" do
-  run "curl -L http://jqueryjs.googlecode.com/files/jquery-#{@jquery_version}.js -o jquery-#{@jquery_version}.js"
 end
 
 plugin 'trusted-params',        :git => "git://github.com/ryanb/trusted-params.git"
@@ -91,6 +86,7 @@ copy_asset_file 'app/models/mailer.rb'
 copy_asset_file 'app/models/user.rb'
 copy_asset_file 'app/models/user_activation.rb'
 copy_asset_file 'app/models/user_session.rb'
+copy_asset_file 'app/views/layouts/_javascript.html.haml'
 copy_asset_file 'app/views/layouts/_flashes.html.haml'
 copy_asset_file 'app/views/mailer/reset_password_request.erb'
 copy_asset_file 'app/views/mailer/user_activation.erb'
@@ -222,10 +218,6 @@ test:
   host: localhost
   encoding: utf8
 }
-
-file 'app/views/layouts/_javascript.html.haml',
-"= javascript_include_tag \"jquery-#{@jquery_version}\", \"application\", :cache => true
-= yield :javascript"
 
 rake 'gems:heroku_spec'
 
