@@ -7,7 +7,7 @@ class UserTest < ActiveSupport::TestCase
   should_have_db_index :active
   should_have_db_index :perishable_token
 
-  should_have_attached_file :photo
+  should_have_paperclip_field :photo
 
   should "be authentic" do
     assert !User.ancestors.map(&:to_s).grep(/Authlogic/).empty?

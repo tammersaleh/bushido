@@ -15,6 +15,8 @@ Mocha::Configuration.warn_when(:stubbing_non_public_method)
 class ActiveSupport::TestCase
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
+  
+  stub_all_s3_for_paperclip_model(User)
 end
 
 class ActionView::TestCase
