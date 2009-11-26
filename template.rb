@@ -73,6 +73,7 @@ gem 'mocha',    :env => "test"
 
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'
+run "rm public/stylesheets/formtastic_changes.css"
 run "haml --rails ."
 
 file '.gitignore', read_asset_file('gitignore')
@@ -88,6 +89,7 @@ copy_asset_file 'app/models/user_activation.rb'
 copy_asset_file 'app/models/user_session.rb'
 copy_asset_file 'app/views/layouts/_javascript.html.haml'
 copy_asset_file 'app/views/layouts/_flashes.html.haml'
+copy_asset_file 'app/views/layouts/_sidebar.html.haml'
 copy_asset_file 'app/views/mailer/reset_password_request.erb'
 copy_asset_file 'app/views/mailer/user_activation.erb'
 copy_asset_file 'app/views/pages/home.html.haml'
@@ -117,6 +119,7 @@ copy_asset_file 'lib/tasks/paperclip_tasks.rake'
 copy_asset_file 'public/images/default_medium_avatar.jpg'
 copy_asset_file 'public/images/default_small_avatar.jpg'
 copy_asset_file 'public/javascripts/application.js'
+copy_asset_file 'public/stylesheets/sass/screen.sass'
 copy_asset_file 'public/stylesheets/screen.css'
 copy_asset_file 'test/factories.rb'
 copy_asset_file 'test/fixtures/file.jpg'
@@ -177,28 +180,33 @@ file 'app/views/layouts/application.html.haml',
     = stylesheet_link_tag "formtastic_changes"
     = stylesheet_link_tag 'screen', :media => 'all', :cache => true
   %body{ :class => body_class }
-    #header
-      %h1
-        #{@title_app_name}
-      #session_links
-        - if current_user
-          .welcome
-            Hello,
-            = link_to current_user, current_user
-          .logout
-            = link_to "Logout", user_session_url, :method => :delete
-        - else
-          .login
-            = link_to "Login", login_url
-          or
-          .signup
-            = link_to "Signup for a new account", signup_url
-    #content
-      = render :partial => 'layouts/flashes'
-      = yield
-    #footer
-      &copy; 2009 Tammer Saleh Consulting, Inc.
-    = render :partial => 'layouts/javascript'
+    .container
+      #header.column.span-24.last
+        %h1.column.span-18
+          = link_to "#{@title_app_name}", root_url
+        #session_links.column.span-6.last
+          - if current_user
+            .welcome
+              Hello,
+              = link_to current_user, current_user
+            .logout
+              = link_to "Logout", user_session_url, :method => :delete
+          - else
+            .login
+              = link_to "Login", login_url
+            or
+            .signup
+              = link_to "Signup for a new account", signup_url
+      #content.column.span-18
+        = render :partial => 'layouts/flashes'
+        = yield
+      #sidebar.column.span-6.last
+        = render :partial => 'layouts/sidebar'
+      #footer.column.span-24.last
+        &copy; 
+        = Time.now.year
+        Tammer Saleh Consulting, Inc.
+      = render :partial => 'layouts/javascript'
 |
 
 file 'config/database.yml', 

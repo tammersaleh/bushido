@@ -5,5 +5,5 @@ en:
   flash:
     users:
       create:
-        notice: "Welcome!"
+        notice: "You're almost there! We just need you to check your email to confirm your account."
 
