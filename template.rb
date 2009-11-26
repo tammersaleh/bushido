@@ -48,7 +48,6 @@ end
 plugin 'trusted-params',        :git => "git://github.com/ryanb/trusted-params.git"
 plugin 'hoptoad_notifier',      :git => "git://github.com/thoughtbot/hoptoad_notifier.git"
 plugin 'high_voltage',          :git => "git://github.com/thoughtbot/high_voltage.git"
-plugin 'limerick_rake',         :git => "git://github.com/thoughtbot/limerick_rake.git"
 plugin 'blue-ridge',            :git => "git://github.com/relevance/blue-ridge.git"
 plugin 'validation_reflection', :svn => "svn://rubyforge.org//var/svn/valirefl/validation_reflection/trunk"
 
@@ -116,6 +115,7 @@ copy_asset_file 'config/routes.rb'
 copy_asset_file 'db/migrate/20090805175804_create_users.rb'
 copy_asset_file 'lib/tasks/heroku_gems.rake'
 copy_asset_file 'lib/tasks/paperclip_tasks.rake'
+copy_asset_file 'lib/tasks/newb.rake'
 copy_asset_file 'public/images/default_medium_avatar.jpg'
 copy_asset_file 'public/images/default_small_avatar.jpg'
 copy_asset_file 'public/javascripts/application.js'
@@ -287,3 +287,9 @@ ENV['S3_KEY']            = '#{@s3_key}'
 ENV['S3_SECRET']         = '#{@s3_secret}'
 ENV['S3_BUCKET']         = '#{@s3_bucket}'
 }
+
+# If we don't touch the development.log file, it gets owned by root.
+`touch log/development.log`
+# have to run this via system to see the output
+system("rake newb")
+

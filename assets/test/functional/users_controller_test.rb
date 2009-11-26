@@ -22,7 +22,7 @@ class UsersControllerTest < ActionController::TestCase
       end
 
       should_redirect_to("homepage") { root_url }
-      should_set_the_flash_to /welcome/i
+      should_set_the_flash_to /email/i
       should_not_have_errors_on :user
     end
 
