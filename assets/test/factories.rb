@@ -8,6 +8,8 @@ Factory.define :user do |f|
   f.password_confirmation {|user| user.password }
   f.active true
 
+  f.photo File.new(File.join(Rails.root, "test", "fixtures", "file.jpg")) 
+
   # Necessary to keep authlogic from 
   # logging in each user as we create them.
   f.skip_session_maintenance true

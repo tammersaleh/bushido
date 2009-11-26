@@ -119,6 +119,7 @@ copy_asset_file 'public/images/default_small_avatar.jpg'
 copy_asset_file 'public/javascripts/application.js'
 copy_asset_file 'public/stylesheets/screen.css'
 copy_asset_file 'test/factories.rb'
+copy_asset_file 'test/fixtures/file.jpg'
 copy_asset_file 'test/functional/application_controller_test.rb'
 copy_asset_file 'test/functional/pages_controller_test.rb'
 copy_asset_file 'test/functional/user_activations_controller_test.rb'
@@ -253,6 +254,7 @@ else
       run "git push heroku-staging master"
       run "heroku rake db:migrate"
       run "heroku restart"
+      sleep 5
       run "heroku open"
     else
       puts "** Skipping rest of heroku configuration, as there was an error talking to Heroku:"
