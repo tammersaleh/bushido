@@ -1,4 +1,5 @@
 class UsersController < InheritedResources::Base
+  protects_restful_actions
   skip_before_filter :require_user, :only => [:new, :create]
   before_filter :require_self, :except => [:new, :create, :show]
 
@@ -13,8 +14,6 @@ class UsersController < InheritedResources::Base
   private
 
   def require_self
-    unless current_user.id == params[:id].to_i
-      deny_access(:flash => "You cannot access this page.", :redirect_to => root_url)
-    end
+    deny_access unless current_user == resource
   end
 end

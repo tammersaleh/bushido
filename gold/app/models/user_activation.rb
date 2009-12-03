@@ -6,6 +6,10 @@ class UserActivation
     return new(:user => User.find_by_perishable_token(perishable_token))
   end
 
+  def self.human_name
+    "User activation"
+  end
+
   def update_attributes(params)
     return false unless params[:user]
     user.active = true
@@ -18,6 +22,10 @@ class UserActivation
 
   def valid?
     user && user.valid?
+  end
+
+  def new_record?
+    user && user.new_record?
   end
 
   def errors

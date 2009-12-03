@@ -29,8 +29,8 @@ class ApplicationControllerTest < ActionController::TestCase
     context "getting a protected page" do
       setup { get :foo }
 
-      should_redirect_to("the login page") { new_user_session_url }
-      should_set_the_flash_to /must be logged in/i
+      should_redirect_to("the login page") { login_url }
+      should_set_the_flash_to /login/i
     end
 
     context "getting a public page" do
@@ -55,7 +55,7 @@ class ApplicationControllerTest < ActionController::TestCase
       end
 
       should "present the user with a logout link" do
-        assert_select 'a[href=?]', user_session_url, "Logout"
+        assert_select 'a[href=?]', logout_url, "Logout"
       end
     end
   end
