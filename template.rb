@@ -52,23 +52,24 @@ plugin 'blue-ridge',            :git => "git://github.com/relevance/blue-ridge.g
 plugin 'validation_reflection', :svn => "svn://rubyforge.org//var/svn/valirefl/validation_reflection/trunk"
 
 # Prod gems
-gem 'RedCloth'
-gem 'authlogic',                                                                                         :version => '>= 2.1.1'  
-gem 'justinfrench-formtastic',       :lib => 'formtastic',          :source => 'http://gems.github.com', :version => '>= 0.2.2'
-gem 'josevalim-inherited_resources', :lib => 'inherited_resources', :source => 'http://gems.github.com', :version => '>= 0.8.5'
-gem 'thoughtbot-paperclip',          :lib => 'paperclip',           :source => 'http://gems.github.com', :version => '>= 2.3.1'
-gem 'mislav-will_paginate',          :lib => 'will_paginate',       :source => 'http://gems.github.com', :version => '>= 2.3.11'
-gem 'ambethia-smtp-tls',             :lib => 'smtp-tls',            :source => 'http://gems.github.com', :version => '>= 1.1.2'
+gem 'ambethia-smtp-tls', :lib => 'smtp-tls', :source => 'http://gems.github.com', :version => '>= 1.1.2'
+gem 'RedCloth',            :version => ">= 4.0.0"
+gem 'authlogic',           :version => '>= 2.1.1'
+gem 'formtastic',          :version => '>= 0.2.2'
+gem 'inherited_resources', :version => '>= 0.8.5'
+gem 'paperclip',           :version => '>= 2.3.1'
+gem 'will_paginate',       :version => '>= 2.3.11'
+gem 'master_may_i',        :version => '>= 0.4.0'
 
 # Test gems
-gem 'nokogiri', :env => "test", :lib => false
-gem 'webrat',   :env => "test"               
-gem 'fakeweb',  :env => "test"               
-gem 'thoughtbot-factory_girl', :lib => "factory_girl", :source => "http://gems.github.com", :env => "test"
-gem 'thoughtbot-shoulda',      :lib => "shoulda",      :source => "http://gems.github.com", :env => "test"
+gem 'nokogiri',     :env => "test", :lib => false
+gem 'webrat',       :env => "test"               
+gem 'fakeweb',      :env => "test"               
+gem 'factory_girl', :env => "test"
+gem 'shoulda',      :env => "test"
 # Mocha *must* come after shoulda.  
 # See http://mediumexposure.com/2009/08/02/getting-rails-233-and-mocha-096-play-nice-testunit-and-shoulda
-gem 'mocha',    :env => "test"
+gem 'mocha',        :env => "test"
 
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'
@@ -190,7 +191,7 @@ file 'app/views/layouts/application.html.haml',
               Hello,
               = link_to current_user, current_user
             .logout
-              = link_to "Logout", user_session_url, :method => :delete
+              = link_to "Logout", logout_url, :method => :delete
           - else
             .login
               = link_to "Login", login_url

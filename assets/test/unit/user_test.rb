@@ -45,6 +45,8 @@ class UserTest < ActiveSupport::TestCase
     assert_sent_email { |e| e.to.first == user.email }
   end
 
+  should_be_creatable_by("anyone") { nil }
+
   context "a new user" do
     subject { @user }
     setup { @user = User.new }
@@ -63,11 +65,22 @@ class UserTest < ActiveSupport::TestCase
   end
 
   context "an active user" do
+    subject { @user }
     setup { @user = Factory(:user) }
 
     should "be returned by .active" do
       assert User.active.exists?(@user)
     end
+
+    should_be_readable_by(   "anyone") { nil }
+
+    should_be_editable_by(   "themselves") { @user }
+    should_be_destroyable_by("themselves") { @user }
+
+    should_not_be_editable_by(   "everyone")     { nil }
+    should_not_be_destroyable_by("everyone")     { nil }
+    should_not_be_editable_by(   "another user") { Factory(:user) }
+    should_not_be_destroyable_by("another user") { Factory(:user) }
   end
 
   context "an inactive user" do

@@ -26,6 +26,18 @@ class User < ActiveRecord::Base
 
   after_create :send_activation_email, :unless => :active?
 
+  def editable_by?(user)
+    is_self?(user)
+  end
+
+  def destroyable_by?(user)
+    is_self?(user)
+  end
+
+  def is_self?(user)
+    user and user.id == self.id
+  end
+
   def require_password?
     active? and crypted_password.blank?
   end

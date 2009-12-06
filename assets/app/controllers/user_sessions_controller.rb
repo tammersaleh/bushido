@@ -1,6 +1,5 @@
 class UserSessionsController < ApplicationController
-  skip_before_filter :require_user,    :only => [:new, :create]
-  before_filter      :require_no_user, :only => [:new, :create]
+  skip_before_filter :require_user, :only => [:new, :create]
 
   def new
     @user = User.new
@@ -21,7 +20,6 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Good bye, #{current_user}."
-    redirect_back_or new_user_session_url
+    redirect_back_or login_url
   end
 end
-

@@ -3,6 +3,10 @@ require 'test_helper'
 class UserActivationTest < ActiveSupport::TestCase
   setup { Authlogic::Session::Base.controller = Authlogic::TestCase::MockController.new }
 
+  should "have a human name" do
+    assert_equal "User activation", UserActivation.human_name
+  end
+
   context "given an inactive user" do
     setup { @user = Factory(:inactive_user) }
 
@@ -11,6 +15,10 @@ class UserActivationTest < ActiveSupport::TestCase
 
       should "be valid" do
         assert_valid @user_activation
+      end
+
+      should "not look like a new record" do
+        assert !@user_activation.new_record?
       end
 
       should "return the user's perishable token for an id" do

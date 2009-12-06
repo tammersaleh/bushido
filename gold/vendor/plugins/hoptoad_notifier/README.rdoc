@@ -26,11 +26,11 @@ Remove the vendor/plugins/exception_notifier directory.
 
 from your project's RAILS_ROOT, run:
 
-  script/plugin install git://github.com/thoughtbot/hoptoad_notifier.git
+  script/plugin install -f git://github.com/thoughtbot/hoptoad_notifier.git
 
 === Configuration
 
-you should have something like this in config/initializers/hoptoad.rb.
+You should have something like this in config/initializers/hoptoad.rb.
 
   HoptoadNotifier.configure do |config|
     config.api_key = '1234567890abcdef'
@@ -213,6 +213,7 @@ the notifier currently supports the following versions of Rails:
 
 * 1.2.6
 * 2.0.2
+* 2.1.0
 * 2.1.2
 * 2.2.2
 * 2.3.2

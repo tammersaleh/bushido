@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserSessionsControllerTest < ActionController::TestCase
   as_a_visitor do
-    context "on GET to /user_session/new" do
+    context "on GET to /login" do
       setup { get :new }
       should_render_template :new
       should_not_set_the_flash
@@ -35,17 +35,17 @@ class UserSessionsControllerTest < ActionController::TestCase
       should_not_set_the_flash
     end
 
-    should_be_denied_on "delete :destroy"
+    context "on delete to /logout" do
+      setup { delete :destroy }
+      should_be_denied_as_visitor
+    end
   end
 
   as_a_logged_in_user do
-    should_be_denied_on "get :new"
-    should_be_denied_on "post :create, :user_session => {}"
-
     context "on DELETE to /user_session" do
       setup { delete :destroy }
 
-      should_redirect_to("sign in page") { new_user_session_url }
+      should_redirect_to("sign in page") { login_url }
       should_set_the_flash_to /good bye/i
       should "log the user out" do
         assert_nil UserSession.find

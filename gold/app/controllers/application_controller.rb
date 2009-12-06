@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   include HoptoadNotifier::Catcher
+  include MasterMayI::ControllerExtensions
 
   filter_parameter_logging :password, :password_confirmation
 
@@ -15,13 +16,6 @@ class ApplicationController < ActionController::Base
 
 private
  
-  def require_no_user
-    if current_user
-      deny_access :redirect_to => root_url,
-                  :flash       => "You must be logged out to access this page."
-    end
-  end
-
   def interpolation_options
     { :resource_name => resource.to_s }
   end

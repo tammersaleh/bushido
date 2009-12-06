@@ -7,6 +7,12 @@ require 'factory_girl'
 
 begin require 'redgreen'; rescue LoadError; end
 
+%w(master_may_i).each do |gem|
+  Dir[File.join(Gem.loaded_specs[gem].full_gem_path, 'shoulda_macros', '*')].each do |shoulda_file|
+    require shoulda_file
+  end
+end
+
 FakeWeb.allow_net_connect = false
 
 Mocha::Configuration.warn_when(:stubbing_non_existent_method)
