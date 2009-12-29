@@ -11,7 +11,8 @@ heroku_env = File.join(RAILS_ROOT, 'config', 'heroku_env.rb')
 load(heroku_env) if File.exists?(heroku_env)
 
 Rails::Initializer.run do |config|
-  config.gem 'master_may_i', :version => '>= 0.4.0'
+  config.gem 'haml', :version => '>= 2.2.14'
+  config.gem 'master_may_i', :version => '>= 0.6.0'
   config.gem 'will_paginate', :version => '>= 2.3.11'
   config.gem 'paperclip', :version => '>= 2.3.1'
   config.gem 'inherited_resources', :version => '>= 0.8.5'

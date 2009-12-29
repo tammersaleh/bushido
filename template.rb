@@ -59,7 +59,8 @@ gem 'formtastic',          :version => '>= 0.2.2'
 gem 'inherited_resources', :version => '>= 0.8.5'
 gem 'paperclip',           :version => '>= 2.3.1'
 gem 'will_paginate',       :version => '>= 2.3.11'
-gem 'master_may_i',        :version => '>= 0.4.0'
+gem 'master_may_i',        :version => '>= 0.6.0'
+gem 'haml',                :version => '>= 2.2.14'
 
 # Test gems
 gem 'nokogiri',     :env => "test", :lib => false
@@ -74,7 +75,6 @@ gem 'mocha',        :env => "test"
 generate 'blue_ridge'
 generate 'formtastic_stylesheets'
 run "rm public/stylesheets/formtastic_changes.css"
-run "haml --rails ."
 
 file '.gitignore', read_asset_file('gitignore')
 
@@ -289,6 +289,7 @@ ENV['S3_SECRET']         = '#{@s3_secret}'
 ENV['S3_BUCKET']         = '#{@s3_bucket}'
 }
 
+`touch tmp/restart.txt`
 # If we don't touch the development.log file, it gets owned by root.
 `touch log/development.log`
 # have to run this via system to see the output

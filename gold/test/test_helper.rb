@@ -2,8 +2,6 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 require 'action_view/test_case'
-require 'fakeweb'
-require 'factory_girl'
 
 begin require 'redgreen'; rescue LoadError; end
 
@@ -40,7 +38,6 @@ class ActionView::TestCase
   end
 end
 
-require 'webrat'
 class ActionController::TestCase
   include Webrat::Matchers
   def response_body
