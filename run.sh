@@ -8,11 +8,11 @@ rm -f gold/log/*.log
 rm -f gold/db/schema.rb
 
 cd /tmp
-  if (heroku list | grep -x tsaleh-test-app-staging); then
-    heroku destroy --app tsaleh-test-app-staging
+  if (heroku list | grep -x ${USER}-test-app-staging); then
+    heroku destroy --app ${USER}-test-app-staging
   fi
-  rm -rf tsaleh-test-app 
-  rails tsaleh-test-app \
+  rm -rf ${USER}-test-app 
+  rails ${USER}-test-app \
         -m /Users/tsaleh/code/tsaleh-bushido/template.rb \
         -- \
         --hoptoad_key=HOPTOAD_KEY \

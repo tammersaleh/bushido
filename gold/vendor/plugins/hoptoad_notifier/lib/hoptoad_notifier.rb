@@ -11,7 +11,7 @@ require 'hoptoad_notifier/backtrace'
 # Plugin for applications to automatically post errors to the Hoptoad of their choice.
 module HoptoadNotifier
 
-  VERSION = "2.0.18"
+  VERSION = "2.0.19"
   API_VERSION = "2.0"
   LOG_PREFIX = "** [Hoptoad] "
 
@@ -58,11 +58,7 @@ module HoptoadNotifier
 
     # Look for the Rails logger currently defined
     def logger
-      if defined?(Rails.logger)
-        Rails.logger
-      elsif defined?(RAILS_DEFAULT_LOGGER)
-        RAILS_DEFAULT_LOGGER
-      end
+      self.configuration.logger
     end
 
     # Call this method to modify defaults in your initializers.

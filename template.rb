@@ -60,7 +60,7 @@ gem 'inherited_resources', :version => '>= 0.8.5'
 gem 'paperclip',           :version => '>= 2.3.1'
 gem 'will_paginate',       :version => '>= 2.3.11'
 gem 'master_may_i',        :version => '>= 0.6.0'
-gem 'haml',                :version => '>= 2.2.14'
+gem 'haml',                :version => '>= 2.2.3'
 
 # Test gems
 gem 'nokogiri',     :env => "test", :lib => false
