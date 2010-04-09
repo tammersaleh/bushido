@@ -46,21 +46,21 @@ inside "public/stylesheets" do
 end
 
 plugin 'trusted-params',        :git => "git://github.com/ryanb/trusted-params.git"
-plugin 'hoptoad_notifier',      :git => "git://github.com/thoughtbot/hoptoad_notifier.git"
 plugin 'high_voltage',          :git => "git://github.com/thoughtbot/high_voltage.git"
 plugin 'blue-ridge',            :git => "git://github.com/relevance/blue-ridge.git"
 plugin 'validation_reflection', :svn => "svn://rubyforge.org//var/svn/valirefl/validation_reflection/trunk"
 
 # Prod gems
-gem 'ambethia-smtp-tls', :lib => 'smtp-tls', :source => 'http://gems.github.com', :version => '>= 1.1.2'
-gem 'RedCloth',            :version => ">= 4.0.0"
-gem 'authlogic',           :version => '>= 2.1.1'
-gem 'formtastic',          :version => '>= 0.2.2'
-gem 'inherited_resources', :version => '>= 0.8.5'
-gem 'paperclip',           :version => '>= 2.3.1'
-gem 'will_paginate',       :version => '>= 2.3.11'
-gem 'master_may_i',        :version => '>= 0.6.0'
-gem 'haml',                :version => '>= 2.2.3'
+gem 'ambethia-smtp-tls', :lib => 'smtp-tls', :source => 'http://gems.github.com', :version => '~> 1.1.0'
+gem 'RedCloth',            :version => "~> 4.1.0"
+gem 'authlogic',           :version => '~> 2.1.0'
+gem 'formtastic',          :version => '~> 0.9.0'
+gem 'inherited_resources', :version => '~> 0.9.0'
+gem 'paperclip',           :version => '~> 2.3.0'
+gem 'will_paginate',       :version => '~> 2.3.0'
+gem 'master_may_i',        :version => '~> 0.6.0'
+gem 'haml',                :version => '~> 2.2.0'
+gem 'hoptoad_notifier',    :version => '~> 2.2.0'
 
 # Test gems
 gem 'nokogiri',     :env => "test", :lib => false
@@ -229,6 +229,24 @@ test:
   encoding: utf8
 }
 
+file "config/heroku_env.rb", %Q{
+# This file contains the ENV vars necessary to run the app locally.  
+# Some of these values are sensitive, and some are developer specific.
+#
+# DO NOT CHECK THIS FILE INTO VERSION CONTROL
+
+ENV['HOPTOAD_KEY']       = '#{@hoptoad_key}'
+ENV['GMAIL_USERNAME']    = '#{@gmail_username}'
+ENV['GMAIL_PASSWORD']    = '#{@gmail_password}'
+ENV['SESSION_STORE_KEY'] = '#{@session_store_key}'
+ENV['S3_KEY']            = '#{@s3_key}'
+ENV['S3_SECRET']         = '#{@s3_secret}'
+ENV['S3_BUCKET']         = '#{@s3_bucket}'
+}
+
+# have to run this via system to see the output
+rake "newb"
+
 rake 'gems:heroku_spec'
 
 run 'find . -type d -empty -exec touch {}/.keep \;'
@@ -274,24 +292,5 @@ else
   end
 end
 
-file "config/heroku_env.rb", %Q{
-# This file contains the ENV vars necessary to run the app locally.  
-# Some of these values are sensitive, and some are developer specific.
-#
-# DO NOT CHECK THIS FILE INTO VERSION CONTROL
-
-ENV['HOPTOAD_KEY']       = '#{@hoptoad_key}'
-ENV['GMAIL_USERNAME']    = '#{@gmail_username}'
-ENV['GMAIL_PASSWORD']    = '#{@gmail_password}'
-ENV['SESSION_STORE_KEY'] = '#{@session_store_key}'
-ENV['S3_KEY']            = '#{@s3_key}'
-ENV['S3_SECRET']         = '#{@s3_secret}'
-ENV['S3_BUCKET']         = '#{@s3_bucket}'
-}
-
 `touch tmp/restart.txt`
-# If we don't touch the development.log file, it gets owned by root.
-`touch log/development.log`
-# have to run this via system to see the output
-system("rake newb")
 

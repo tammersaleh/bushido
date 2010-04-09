@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
-  include HoptoadNotifier::Catcher
   include MasterMayI::ControllerExtensions
 
   filter_parameter_logging :password, :password_confirmation
@@ -19,4 +18,5 @@ private
   def interpolation_options
     { :resource_name => resource.to_s }
   end
+
 end

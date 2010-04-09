@@ -31,3 +31,6 @@ Contributors
   
 * Chris Redinger (redinger)
   - For pairing & refactoring on the nested-describe command-line fix.
+
+* Corey Haines (coreyhaines)
+	- For colorizing output.

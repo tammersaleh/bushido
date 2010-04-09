@@ -1,4 +1,3 @@
-  include HoptoadNotifier::Catcher
   include MasterMayI::ControllerExtensions
 
   filter_parameter_logging :password, :password_confirmation

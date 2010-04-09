@@ -68,7 +68,7 @@ if(BlueRidge.loaded != true) {
   var BLUE_RIDGE_PREFIX = BLUE_RIDGE_PREFIX || "../../vendor/plugins/blue-ridge/";
   var BLUE_RIDGE_VENDOR_PREFIX = BLUE_RIDGE_PREFIX + "/vendor/";
 
-  require(BLUE_RIDGE_VENDOR_PREFIX + "jquery-1.3.2.js",    {system: true});
+  require(BLUE_RIDGE_VENDOR_PREFIX + "jquery-1.4.2.js",    {system: true});
   require(BLUE_RIDGE_VENDOR_PREFIX + "jquery.fn.js",       {system: true});
   require(BLUE_RIDGE_VENDOR_PREFIX + "jquery.print.js",    {system: true});
   require(BLUE_RIDGE_VENDOR_PREFIX + "screw.builder.js",   {system: true});

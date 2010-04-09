@@ -16,7 +16,7 @@
   window.location = fixture_file;
   print(" - sample DOM loaded");
 
-  load(plugin_prefix + "/vendor/jquery-1.3.2.js");
+  load(plugin_prefix + "/vendor/jquery-1.4.1.js");
   print(" - jQuery-1.3.2 loaded");
   
   load(plugin_prefix + "/vendor/jquery.print.js");

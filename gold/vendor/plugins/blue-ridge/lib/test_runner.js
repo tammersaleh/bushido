@@ -79,8 +79,10 @@ if(BlueRidge.loaded != true) {
     loadInlineScript: function(){},
     log: function(){}
   });
-
-  require(BLUE_RIDGE_VENDOR_PREFIX + "jquery-1.3.2.js");
+  
+  Envjs.wait();
+  
+  require(BLUE_RIDGE_VENDOR_PREFIX + "jquery-1.4.2.js");
   require(BLUE_RIDGE_VENDOR_PREFIX + "jquery.fn.js");
   require(BLUE_RIDGE_VENDOR_PREFIX + "jquery.print.js");
   require(BLUE_RIDGE_VENDOR_PREFIX + "screw.builder.js");
@@ -92,10 +94,12 @@ if(BlueRidge.loaded != true) {
   require(BLUE_RIDGE_VENDOR_PREFIX + "smoke.stub.js");
   require(BLUE_RIDGE_VENDOR_PREFIX + "screw.mocking.js");
   require(BLUE_RIDGE_LIB_PREFIX + "consoleReportForRake.js");
-
+  
   print("Running " + BlueRidge.CommandLine.specFile + " with fixture '" + BlueRidge.CommandLine.fixtureFile + "'...");
   BlueRidge.loaded = true;  
-
+  
   load(BlueRidge.CommandLine.specFile);
   jQuery(window).trigger("load");
+  
+  Envjs.wait();
 }
